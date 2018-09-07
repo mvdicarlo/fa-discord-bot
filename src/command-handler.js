@@ -56,11 +56,10 @@ module.exports = {
             } else {
                 const $ = cheerio.load(body);
                 const submissionsCount = $('td').eq(16).text().split('\n')[2].trim().split(' ')[1].trim();
-                const pageCount = Number(submissionsCount) / 48;
+                const pageCount = Math.ceil(Number(submissionsCount) / 48);
+                
                 const promises = [];
-                for (let i = 0; i < pageCount; i++) {
-                    promises.push(getPage(`http://www.furaffinity.net/gallery/${username}/${i}/`));
-                }
+                promises.push(getPage(`http://www.furaffinity.net/gallery/${username}/${Math.floor(Math.random() * pageCount)}/`))
 
                 Promise.all(promises).catch(err => {
                     cb(`Unable to retrieve user gallery for ${username}`, null);
