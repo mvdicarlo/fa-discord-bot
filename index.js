@@ -1,3 +1,5 @@
+const http = require('http');
+
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const handler = require('./src/command-handler');
@@ -45,7 +47,7 @@ client.on('message', (msg) => {
         return;
 
     const cmd = getCommand(message);
-    switch (cmd[0].toLowerCase()) {
+    switch (cmd[0]) {
         case 'help':
             msg.author.sendMessage(getCommandsList());
             break;
@@ -63,4 +65,8 @@ client.on('message', (msg) => {
     }
 });
 
-client.login(process.env.fab_token);
+client.login(process.env.token);
+
+// server just to satisfy zeit/now
+const server = http.createServer();
+server.listen(3000);
