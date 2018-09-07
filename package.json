@@ -1,0 +1,40 @@
+{
+    "name": "fa-discord-bot",
+    "version": "1.0.0",
+    "description": "FurAffinity discord bot",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "deploy": "now"
+    },
+    "keywords": [
+        "fa",
+        "furaffinity",
+        "discord",
+        "bot"
+    ],
+    "now": {
+        "alias": "furaffinity-bot",
+        "name": "furaffinity-bot",
+        "env": {
+            "token": "@fab_token",
+            "indicator": "owo"
+        },
+        "files": [
+            "index.js",
+            "package.json",
+            "cookies.json",
+            "src"
+        ]
+    },
+    "author": "Michael DiCarlo",
+    "license": "ISC",
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.2",
+        "discord.io": "^2.5.3",
+        "discord.js": "^11.4.2",
+        "request": "^2.88.0",
+        "tough-cookie-filestore": "0.0.1",
+        "winston": "^3.1.0"
+    }
+}
