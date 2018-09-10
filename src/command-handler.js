@@ -54,10 +54,20 @@ module.exports = {
             if (err) {
                 cb(`Unable to retrieve user gallery for ${username}`, null);
             } else {
+                if (body.includes('This user cannot be found.')) {
+                    cb(`Unable to retrieve user gallery for ${username}`, null);
+                    return;
+                }
+
                 const $ = cheerio.load(body);
                 const submissionsCount = $('td').eq(16).text().split('\n')[2].trim().split(' ')[1].trim();
                 const pageCount = Math.ceil(Number(submissionsCount) / 48);
-                
+
+                if (pageCount === 0 || pageCount === undefined) {
+                    cb(null, `${username} has no submissions.`);
+                    return;
+                }
+
                 const promises = [];
                 promises.push(getPage(`http://www.furaffinity.net/gallery/${username}/${Math.floor(Math.random() * pageCount)}/`))
 
