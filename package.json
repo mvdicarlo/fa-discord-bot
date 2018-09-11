@@ -19,7 +19,7 @@
         "name": "furaffinity-bot",
         "env": {
             "token": "@fab_token",
-            "indicator": "owo"
+            "indicator": "!fa"
         },
         "files": [
             "index.js",
