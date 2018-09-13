@@ -3,7 +3,7 @@ const http = require('http');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const handler = require('./src/command-handler');
-const commandIndicator = process.env.indicator || 'owo';
+const commandIndicator = process.env.indicator || '!fa';
 const logger = require('winston');
 
 logger.configure({

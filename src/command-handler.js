@@ -268,8 +268,9 @@ module.exports = {
                 const tdBlocks = $('td');
                 const infoBlock = tdBlocks.eq('12').text().split('\n').map(str => str.trim()).filter(str => str !== '' && str !== '\n');
                 const statsBlock = tdBlocks.eq('16').text().split('\n').map(str => str.trim()).filter(str => str !== '' && str !== '\n');
-                const watchedBlock = tdBlocks.eq('42').text().split(' ').filter(str => str !== '' && str !== '\n');
-                const watchingBlock = tdBlocks.eq('57').text().split(' ').filter(str => str !== '' && str !== '\n');
+
+                const catBlocks = $('.cat');
+
 
                 const userTitle = infoBlock[1].split(': ')[1];
                 const registeredSince = infoBlock[2].split(': ')[1];
@@ -282,8 +283,25 @@ module.exports = {
                 const journals = statsBlock[4].split(': ')[1];
                 const favorites = statsBlock[5].split(': ')[1];
 
-                const watching = watchingBlock[2].replace(/(\(|\))/g, '');
-                const watchedBy = watchedBlock[2].replace(/(\(|\))/g, '');
+                let watching = 0;
+                let watchedBy = 0;
+
+                try {
+                  const watchedBlock = catBlocks.eq('6').text().split(' ').filter(str => str !== '' && str !== '\n');
+                  const watchingBlock = catBlocks.eq('8').text().split(' ').filter(str => str !== '' && str !== '\n');
+                  watching = watchingBlock[2].replace(/(\(|\))/g, '');
+                  watchedBy = watchedBlock[2].replace(/(\(|\))/g, '');
+                } catch (e) {
+                  try {
+                    const watchedBlock = catBlocks.eq('7').text().split(' ').filter(str => str !== '' && str !== '\n');
+                    const watchingBlock = catBlocks.eq('9').text().split(' ').filter(str => str !== '' && str !== '\n');
+                    watching = watchingBlock[2].replace(/(\(|\))/g, '');
+                    watchedBy = watchedBlock[2].replace(/(\(|\))/g, '');
+                  } catch (e) {
+                    // give up
+                  }
+
+                }
 
                 const msg =
                     '```' +
