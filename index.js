@@ -72,7 +72,6 @@ client.on('message', (msg) => {
             });
             break;
         case 'random':
-        console.log(nsfw)
             if (cmd.length > 0 && nsfw) {
                 handler.randomImage(cmd[0], (err, res) => {
                     msg.reply(err ? err : res);

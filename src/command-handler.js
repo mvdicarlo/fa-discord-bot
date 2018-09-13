@@ -180,27 +180,17 @@ module.exports = {
 
                 if (pageCount === 0 || pageCount === undefined) {
                     cb(null, `${username} has no submissions.`);
-                    return;
-                }
-
-                const promises = [];
-                promises.push(getPage(`${DEFAULT_URL}/gallery/${username}/${Math.floor(Math.random() * pageCount)}/`))
-
-                Promise.all(promises).catch(err => {
-                    cb(`Unable to retrieve user gallery for ${username}`, null);
-                }).then(pages => {
-                    const links = [];
-                    const images = pages.map(p => {
-                        const $ = cheerio.load(p);
-                        $('a').each((im, el) => {
-                            if (el.name === 'a' && el.attribs.href && el.attribs.href.includes('/view/')) {
-                                links.push(el.attribs.href);
-                            }
-                        });
+                } else {
+                  getPage(`${DEFAULT_URL}/gallery/${username}/${Math.floor(Math.random() * pageCount)}/`).then(p => {
+                    getRandomFullImageFromPage(p).then((img) => {
+                        cb(null, img);
+                    }).catch((err) => {
+                        cb('Unable to retrieve image.');
                     });
-
-                    cb(null, DEFAULT_URL + links[Math.floor(Math.random() * links.length)]);
-                });
+                  }).catch(() => {
+                    cb('Unable to retrieve image.');
+                  })
+                }
             }
         });
     },
