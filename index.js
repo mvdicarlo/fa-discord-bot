@@ -13,7 +13,7 @@ logger.configure({
 });
 
 function isBotCommand(msg) {
-    if (msg.includes('owo ') || msg.includes(' owo')) {
+    if (msg.includes(`${commandIndicator} `) || msg.includes(` ${commandIndicator}`)) {
         return false;
     }
 
@@ -26,10 +26,10 @@ function getCommand(msg) {
 
 function getCommandsList() {
     return '***FAB Commands:***\n\n'
-    + `**${commandIndicator}frontpage** - *find a random image from the front page. (Takes into account channel nsfw flag)*\n\n`
-    + `**${commandIndicator}browse** *<all | babyfur | bondage | digimon | fatfurs | fetishother | fursuit | gore | hyper | inflation | macro | mylittlepony | paw | pokemon | pregnancy | sonic | transformation | vore | watersports | general>* - *find a random image in the browse section for type. (Takes into account channel nsfw flag)*\n\n`
-    + `**${commandIndicator}random** *<username>* - *find a random image from a user's gallery.*\n\n`
-    + `**${commandIndicator}search** *<tags>* - *find a random image based on tags (space separated). (Takes into account channel nsfw flag)*\n\n`
+    + `**${commandIndicator}frontpage** - *find a random image from the front page. (Takes into account channel NSFW flag)*\n\n`
+    + `**${commandIndicator}browse** *<all | babyfur | bondage | digimon | fatfurs | fetishother | fursuit | gore | hyper | inflation | macro | mylittlepony | paw | pokemon | pregnancy | sonic | transformation | vore | watersports | general>* - *find a random image in the browse section for type. (Takes into account channel NSFW flag)*\n\n`
+    + `**${commandIndicator}random** *<username>* - *find a random image from a user's gallery.* (Only works in NSFW channels)\n\n`
+    + `**${commandIndicator}search** *<tags>* - *find a random image based on tags (space separated). (Takes into account channel NSFW flag)*\n\n`
     + `**${commandIndicator}stats** *<username>* - *find stats for a user.*\n\n`;
 }
 
@@ -72,10 +72,12 @@ client.on('message', (msg) => {
             });
             break;
         case 'random':
-            if (cmd.length > 0) {
+            if (cmd.length > 0 && !nsfw) {
                 handler.randomImage(cmd[0], (err, res) => {
                     msg.reply(err ? err : res);
                 });
+            } else if (nsfw) {
+              msg.reply('Command must be used in a NSFW channel.');
             } else {
                 msg.reply('Please provide a username.');
             }
