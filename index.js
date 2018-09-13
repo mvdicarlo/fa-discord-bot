@@ -26,7 +26,7 @@ function getCommand(msg) {
 
 function getCommandsList() {
     return '***FAB Commands:***\n\n'
-    + `**${commandIndicator}frontpage** - *find a random image from the front page. (Takes into account channel NSFW flag)*\n\n`
+    + `**${commandIndicator}frontpage** - *find a random image from the front page. (Takes into account channel NSFW flag !). Can also do ${commandIndicator}frontpage nsfw to only get nsfw images (disabled on sfw channels).*\n\n`
     + `**${commandIndicator}browse** *<all | babyfur | bondage | digimon | fatfurs | fetishother | fursuit | gore | hyper | inflation | macro | mylittlepony | paw | pokemon | pregnancy | sonic | transformation | vore | watersports | general>* - *find a random image in the browse section for type. (Takes into account channel NSFW flag)*\n\n`
     + `**${commandIndicator}random** *<username>* - *find a random image from a user's gallery.* (Only works in NSFW channels)\n\n`
     + `**${commandIndicator}favorites** *<username>* - *find a random image from a user's first page of favorites.* (Only works in NSFW channels)\n\n`
@@ -70,7 +70,7 @@ client.on('message', (msg) => {
         case 'frontpage':
             handler.browse('all', nsfw, (err, res) => {
                 msg.reply(err ? err : res);
-            });
+            }, cmd.length > 0 ? cmd[0] === 'nsfw' : false);
             break;
         case 'random':
             if (cmd.length > 0 && nsfw) {

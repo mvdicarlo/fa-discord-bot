@@ -115,7 +115,7 @@ function getRandomFullImageFromPage(page) {
 }
 
 module.exports = {
-    browse(type, nsfw, cb) {
+    browse(type, nsfw, cb, nsfwOnly) {
         if (!types.hasOwnProperty(type)) {
             cb(`Invalid type: ${type}.\nTry using one of these <all |babyfur | bondage | digimon | fatfurs | fetishother | fursuit | gore | hyper | inflation | macro | mylittlepony | paw | pokemon | pregnancy | sonic | transformation | vore | watersports | general>`);
             return;
@@ -128,7 +128,7 @@ module.exports = {
             go: 'Update',
             perpage: 72,
             species: 1,
-            rating_general: 1,
+            rating_general: nsfw ? (nsfwOnly ? 0 : 1) : 1,
             rating_mature: nsfw ? 1 : 0,
             rating_adult: nsfw ? 1 : 0
         }).then((body) => {
