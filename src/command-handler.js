@@ -74,7 +74,6 @@ function getPostPage(url, form) {
             if (err) {
                 reject(false);
             } else {
-                console.log(body)
                 resolve(body);
             }
         });
@@ -193,6 +192,15 @@ module.exports = {
                 }
             }
         });
+    },
+
+    randomFavorite(username, cb) {
+        getPage(`${DEFAULT_URL}/favorites/${username}`)
+        .then(page => {
+            getRandomFullImageFromPage(page)
+            .then((img) => cb(null, img))
+            .catch(() => cb('Unable to retrieve image.'));
+        }).catch(() => cb('Unable to retrieve image.'));
     },
 
     tagSearch(tags, nsfw, cb) {
