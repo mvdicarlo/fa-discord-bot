@@ -72,12 +72,13 @@ client.on('message', (msg) => {
             });
             break;
         case 'random':
-            if (cmd.length > 0 && !nsfw) {
+        console.log(nsfw)
+            if (cmd.length > 0 && nsfw) {
                 handler.randomImage(cmd[0], (err, res) => {
                     msg.reply(err ? err : res);
                 });
-            } else if (nsfw) {
-              msg.reply('Command must be used in a NSFW channel.');
+            } else if (!nsfw) {
+              msg.reply('Command can only be used in a NSFW channel.');
             } else {
                 msg.reply('Please provide a username.');
             }
