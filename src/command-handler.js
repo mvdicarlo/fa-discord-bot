@@ -271,10 +271,18 @@ module.exports = {
 
                 const catBlocks = $('.cat');
 
+                let userTitle = undefined;
+                let registeredSince = undefined;
+                let currentMood = undefined;
 
-                const userTitle = infoBlock[1].split(': ')[1];
-                const registeredSince = infoBlock[2].split(': ')[1];
-                const currentMood = infoBlock[3].split(': ')[1];
+                if (infoBlock[1].includes('Title')) {
+                  userTitle = infoBlock[1].split(': ')[1];
+                  registeredSince = infoBlock[2].split(': ')[1];
+                  currentMood = infoBlock[3].split(': ')[1];
+                } else {
+                  registeredSince = infoBlock[1].split(': ')[1];
+                  currentMood = infoBlock[2].split(': ')[1];
+                }
 
                 const pageVisits = statsBlock[0].split(': ')[1];
                 const submissions = statsBlock[1].split(': ')[1];
